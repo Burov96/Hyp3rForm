@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.slide-effect {
+    transition: transform 0.5s;
+    transform: translateX(-100%);
+  }
+  @keyframes colorChange {
+    0% {
+      color: #1F2937; /* Tailwind's coolGray-800 */
+    }
+    50% {
+      color: #3B82F6; /* Tailwind's blue-500 */
+    }
+    100% {
+      color: #1F2937; /* Tailwind's coolGray-800 */
+    }
+  }
