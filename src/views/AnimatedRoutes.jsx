@@ -15,6 +15,7 @@ export default function AnimatedRoutes() {
     <AnimatePresence>
     <Routes location={location} key={location.pathname}>
     <Route path='/' element={<HomePage />} />
+    <Route path='/Hyp3rForm' element={<HomePage />} />
       <Route path='/products' element={<Products />} />
       <Route path='/contact' element={<ContactUs />} />
       <Route path='/premier' element={<Premier />} />

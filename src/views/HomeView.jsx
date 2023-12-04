@@ -1,9 +1,7 @@
 import React, { useRef, useState, useEffect, useContext} from "react";
-// import { useData } from './DataContext';
 import { ShoppingCartContext as ShoppingCartProvider  } from "../App";
 import { motion } from "framer-motion";
 
-//image imports
 import kutiqImage from './kutiq.png';
 import kutiqEAA from './KutiqEAA.png';
 import wired from './wired.png';
@@ -76,16 +74,6 @@ function scrollerche(){
     }
   }, [activeProduct]);
 
-  // useEffect(() => {
-  //   if (showListItems) {
-  //     const timeout = setTimeout(() => {
-  //       setBuyAppear(true);
-  //     }, 700);
-  
-  //     return () => clearTimeout(timeout);
-  //   }
-  // }, [showListItems]);
-
 
   const baseStyles = "text-center transition-all text-xl text-zinc-50 w-96 m-3";
 
@@ -99,22 +87,18 @@ function scrollerche(){
       listItemData: [
         {
           text: "This is our premier product. The prime blend of supreme grade compounds, gathered by hand, by Themiscyrian Amazonkas. The formula consists of :",
-          // showCondition: activeProduct,
           styles: "opacity-100 duration-1000 z-10",
         },
         {
           text: "7,000mg of L-Citruline (pure 7g's, not the bs 2:1 Malic acid) 🦾",
-          // showCondition: showDetails && activeProduct,
           styles: "opacity-100 duration-[500ms] z-10 top-[32rem]",
         },
         {
           text: "1,500mg DMAA (the hard stuff) 🔥",
-          // showCondition: showDetails && activeProduct,
           styles: "opacity-100 duration-[1000ms] z-10 top-[37rem]",
         },
         {
           text: "1,500mg Agmatine Sulfate 🎯",
-          // showCondition: showDetails && activeProduct,
           styles: "opacity-100 duration-[2000ms] z-10 top-[41rem]",
         },
       ],
@@ -134,22 +118,18 @@ function scrollerche(){
         },
         {
           text: "5,000mg of L-Leucine - The mTOR pathway activator 💪",
-          // showCondition: showDetails && activeProduct,
           styles: "opacity-100 duration-[500ms] z-10 top-[32rem]",
         },
         {
           text: "3,000mg of L-Isoleucine - Fuel for muscle recovery and growth 🔥",
-          // showCondition: showDetails && activeProduct,
           styles: "opacity-100 duration-[1000ms] z-10 top-[37rem]",
         },
         {
           text: "2,500mg of L-Valine – Enhance endurance and tissue repair 🚀",
-          // showCondition: showDetails && activeProduct,
           styles: "opacity-100 duration-[2000ms] z-10 top-[41rem]",
         },
         {
           text: "And a perfect blend of the other essential amino acids ensuring optimal muscle function 🌱",
-          // showCondition: showDetails && activeProduct,
           styles: "opacity-100 duration-[2500ms] z-10 top-[45rem]",
         },
       ],
@@ -337,11 +317,11 @@ function scrollerche(){
           {products[activeProduct].listItemData.map((detail, key) => (
             <ul
               key={key}
-              className={` font-montserrat ${
+              className={`text-left font-montserrat ${
                 isBought
                   ? " scale-[2] font-extrabold opacity-0 duration-500"
                   : showListItems
-                  ? " mb-5 text-2xl font-bold from-neutral-900 to-white  text-center   w-[32rem] transition-transform duration-700 text-white"
+                  ? " mb-5 text-2xl font-bold from-neutral-900 to-white     w-[32rem] transition-transform duration-700 text-white"
                   : " w-[28rem] transition-transform duration-700 text-white translate-x-[110rem] -translate-y-[144rem]"
               }`}
             >
@@ -357,7 +337,6 @@ function scrollerche(){
               showListItems
                 ? " "
                 : "translate-x-[110rem] -translate-y-[144rem]" }`} onChange={handleQuantityPicker}>
-        {/* Generate options for numbers 1 through 20 */}
         {Array.from({ length: 10 }, (_, index) => (
           <option key={index} value={index + 1}>
             {index + 1}
