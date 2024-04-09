@@ -8,6 +8,8 @@ import { AnimatePresence } from 'framer-motion'
 import HomePage from './Home.jsx';
 import { ContactUs } from './contact.jsx';
 import SponsorshipComponent from './sponsor.jsx';
+import Login from './Login.jsx';
+import Register from './Register.jsx';
 
 export default function AnimatedRoutes() {
     const location = useLocation()
@@ -20,6 +22,8 @@ export default function AnimatedRoutes() {
       <Route path='/contact' element={<ContactUs />} />
       <Route path='/premier' element={<Premier />} />
       <Route path='/cart' element={<Cart />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
       <Route path='/sponsorme' element={<SponsorshipComponent />} />
     </Routes>
     </AnimatePresence>

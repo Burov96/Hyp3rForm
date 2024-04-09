@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { redirect } from 'react-router';
 import kuhnq from "/src/views/path_to_a_cool_image.webp"
+import { useOutsideClick } from '../utils/outsideClickFunctionRuner';
+
+
+
 
 const SponsorshipComponent = () => {
-    return (
-    <div className='duration-200 h-[110vh] -translate-y-6 flex justify-center items-center backdrop-blur-md'>
+    const [blur, setBlur] = useState(true); 
 
-        <div className=" -mt-[200px] w-screen bg-gradient-to-br from-black to-gray-800 p-10 h-auto md:h-96 flex flex-col md:flex-row items-center justify-between relative overflow-hidden space-y-8 md:space-y-0 md:space-x-10">
+    const divRef = useRef(null);
+    // Use the custom hook to toggle the blur state when clicking outside of the div
+    useOutsideClick(divRef, (f) => setBlur(f));
+
+    return (
+    <div className={` duration-200 h-screen flex justify-center items-center ${blur?'backdrop-blur-md' : ''}`}
+    >
+
+        <div className=" -mt-[200px] w-screen bg-gradient-to-br from-black to-gray-800 p-10 h-auto md:h-96 flex flex-col md:flex-row items-center justify-between relative overflow-hidden space-y-8 md:space-y-0 md:space-x-10"
+        
+        ref={divRef}
+
+            >
 
             <div className="flex-shrink-0 w-full md:w-1/3">
                 <img src={kuhnq} alt="Promotional Image" className="rounded-xl shadow-2xl object-cover w-full h-64" />

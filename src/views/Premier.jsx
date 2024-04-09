@@ -16,12 +16,10 @@ export default function Premier() {
 
   useEffect(() => {
     setPosition("bg-top");
-    // Scroll to the bottom after 6 seconds
     const scrollDownTimeout = setTimeout(() => {
       setPosition("bg-bottom");
     }, 6000);
 
-    // Change the image and scroll to the top after 12 seconds
     const changeImageTimeout = setTimeout(() => {
       setPosition("bg-top");
       setCurr((prev) => (prev < images.length - 1 ? prev + 1 : 0));
@@ -31,7 +29,7 @@ export default function Premier() {
       clearTimeout(scrollDownTimeout);
       clearTimeout(changeImageTimeout);
     };
-  }, [curr]); // Only re-run the effect if `curr` changes
+  }, [curr]);
 
 
   const images = [
@@ -44,15 +42,14 @@ export default function Premier() {
     image7,
     image8,
   ];
-
   return (
     <motion.div
     initial={{ opacity: 0, y: 100 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: 100 }}
-    className="flex justify-center items-center h-screen">
+    className="relative flex xl:items-center justify-center h-[90svh] w-screen ">
       <div
-        className={`w-[1024px] h-[550px] flex justify-center items-end space-x-2 rounded-2xl duration-[6000ms] transition-all ${position}`}
+        className={`h-[77svh] w-[90svw]  xl:w-[1024px] xl:h-[420px]  flex justify-center items-end space-x-2 rounded-2xl duration-[6000ms] xl:scale-125 transition-all ${position}`}
         style={{ backgroundImage: `url(${images[curr]})` }}
       >
         {images.map((_, index) => (

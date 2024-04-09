@@ -9,12 +9,12 @@ const containerVariants = {
 };
 
 const titleVariants = {
-  hidden: { y: "-100vh", opacity: 0 },
+  hidden: { y: "-100svh", opacity: 0 },
   visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 120 } },
 };
 
 const subTitleVariants = {
-  hidden: { y: "100vh", opacity: 0 },
+  hidden: { y: "100svh", opacity: 0 },
   visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 120 } },
 };
 
@@ -27,7 +27,7 @@ const HomePage = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="flex flex-col items-center justify-center h-screen bg-black bg-opacity-50 absolute inset-0"
+      className="overflow-y-hidden flex flex-col items-center justify-center h-[100svh] bg-black bg-opacity-50 absolute inset-0"
     >
       <motion.h1
         variants={titleVariants}

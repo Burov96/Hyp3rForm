@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect, useContext} from "react";
-import { ShoppingCartContext as ShoppingCartProvider  } from "../App";
 import { motion } from "framer-motion";
 
 import kutiqImage from './kutiq.png';
@@ -9,17 +8,19 @@ import cherryBomb from './cherry-bomb.png';
 import nootropic from './nootropic.png';
 import limitedpre from './limitedpre.png';
 import essential from './essential.png';
+import { ShoppingCartContext } from "../context/ShoppingCart";
+import { toast } from "react-toastify";
 
 
 export default function Products() {
 
   const [isBought, setIsBought] = useState(false);
   const [activeProduct, setActiveProduct] = useState(null);
-  const [hoveredProduct, setHoveredProduct] = useState(null);
+  // const [hoveredProduct, setHoveredProduct] = useState(null);
   const [savedScrollPosition, setSavedScrollPosition] = useState(0);
   const [showListItems, setShowListItems] = useState(false);
-  const [buyAppear, setBuyAppear] = useState(false);
-  const { cart, addToCart, removeFromCart } = useContext(ShoppingCartProvider);
+  // const [buyAppear, setBuyAppear] = useState(false);
+  const {  addToCart, removeFromCart } = useContext(ShoppingCartContext);
   const [quantity, setQuantity] = useState(1);
 
   const divRef = useRef(null);
@@ -32,9 +33,6 @@ export default function Products() {
     addToCart(item,quantity);
   };
 
-  const handleRemoveFromCart = (item) => {
-    removeFromCart(item);
-  };
 
 function scrollerche(){
   if (!activeProduct) {
@@ -59,10 +57,6 @@ function scrollerche(){
     scrollerche();
   };
 
-  const handleProductHover = (productKey) => {
-    setHoveredProduct(productKey);
-  };
-
 
   useEffect(() => {
     if (activeProduct) {
@@ -75,7 +69,7 @@ function scrollerche(){
   }, [activeProduct]);
 
 
-  const baseStyles = "text-center transition-all text-xl text-zinc-50 w-96 m-3";
+
 
   const products = {
     pwo: {
@@ -267,16 +261,16 @@ function scrollerche(){
   };
   return (
     <motion.div
-    initial={{ opacity: 0, y: 100 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 100 }}
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 100 }}
     >
       <div
         ref={divRef}
-        className={`${
+        className={` h-[90svh] mt-2 scrollbar-hide ${
           activeProduct
-            ? "-translate-x-80 transition-transform duration-700 scale-[.6] overflow-hidden h-[120vh]"
-            : "h-screen overflow-y-scroll  scale-50 -mt-1 "
+            ? " overflow-hidden scale-150 xl:scale-95 xl:-translate-x-12 transition-transform duration-700 "
+            : "overflow-scroll -mt-1 "
         }`}
       >
         {Object.keys(products).map((key) => {
@@ -288,20 +282,14 @@ function scrollerche(){
               <div key={key}>
                 <img
                   onClick={() => handleProductClick(key)}
-                  onMouseOver={() => handleProductHover(key)}
-                  onMouseOut={() => setHoveredProduct(null)}
                   src={product.imgSrc}
                   alt={product.alt}
-                  className={`cursor-pointer ${
+                  className={`z-10 transition-all duration-1000 xl:mt-5 scale-75 xl:scale-[.5] cursor-pointer ${
                     isBought && isActiveProduct
-                      ? "transition-all duration-500 scale-[.2] translate-x-[102rem] -translate-y-[62rem]"
+                      ? " transition-all duration-500 scale-[.2] translate-x-[102rem] -translate-y-[62rem]"
                       : isActiveProduct === true
-                      ? "transition-all duration-300 scale-100 absolute left-20 -translate-y-[14rem]"
-                      : isBought === false && hoveredProduct !== key
-                      ? "z-10 transition-all duration-1000 scale-[.5]"
-                      : isBought === false && hoveredProduct == key
-                      ? "z-10 transition-all duration-1000 scale-[.6]"
-                      : null
+                      ? " transition-all duration-300  xl:absolute xl:-translate-y-[24rem] translate-y-[2rem]"
+                      : " hover:z-10 hover:transition-all  hover:scale-[0.52]"
                   }`}
                 />
               </div>
@@ -313,57 +301,71 @@ function scrollerche(){
       </div>
 
       {activeProduct && (
-        <div className="absolute top-[20%] left-[60%] bg-cyan-950 bg-opacity-20 rounded-3xl p-12 hover:bg-opacity-30 transition-all">
-          {products[activeProduct].listItemData.map((detail, key) => (
-            <ul
-              key={key}
-              className={`text-left font-montserrat ${
-                isBought
-                  ? " scale-[2] font-extrabold opacity-0 duration-500"
-                  : showListItems
-                  ? " mb-5 text-2xl font-bold from-neutral-900 to-white     w-[32rem] transition-transform duration-700 text-white"
-                  : " w-[28rem] transition-transform duration-700 text-white translate-x-[110rem] -translate-y-[144rem]"
-              }`}
-            >
-              <li>{detail.text}</li>
-            </ul>
-          ))}
+        <div className="overflow-y-scroll  scrollbar-hide p-2 mx-3 fixed w-[95svw] bottom-2 transform  h-auto max-h-[41svh] xl:max-h-[85svh] bg-cyan-950 bg-opacity-40 rounded-3xl xl:scale-75 xl:absolute xl:w-auto xl:h-auto xl:bottom-auto xl:top-[20%] xl:left-[60%]  xl:right-auto xl:p-5 transition-all">
+          <ul
+            className={`select-text xl:text-left font-montserrat ${
+              isBought
+                ? "scale-[2] font-extrabold opacity-0 duration-500"
+                : showListItems
+                ? "xl:mb-6 xl:text-2xl font-bold  transition-transform duration-700 text-white"
+                : "w-[28rem] transition-transform duration-700 text-white translate-x-[0] translate-y-[0]"
+            }`}
+          >
+            {products[activeProduct].listItemData.map((detail, key) => (
+              <li key={key} className="p-3 xl:p-5 ">
+                {detail.text}
+              </li>
+            ))}
+          </ul>
 
-          <h2 className={`text-7xl text-white p-12 content-center text-center transition-all ${showListItems?'':'translate-x-[110rem] -translate-y-[144rem]'}`}>
+          <h2
+            className={`xl:text-7xl text-5xl text-white py-4 xl:py-10 content-center text-center transition-all ${
+              showListItems ? "" : "translate-x-[110rem] -translate-y-[144rem]"
+            }`}
+          >
             {products[activeProduct].price} BGN
           </h2>
 
-          <select value={quantity} className={ `delay-200 mr-5 w-9 scrollbar-hide scrollbar-width-none ${
-              showListItems
-                ? " "
-                : "translate-x-[110rem] -translate-y-[144rem]" }`} onChange={handleQuantityPicker}>
-        {Array.from({ length: 10 }, (_, index) => (
-          <option key={index} value={index + 1}>
-            {index + 1}
-          </option>
-        ))}
-      </select>
+          <select
+            value={quantity}
+            className={`scale-150  delay-200 mx-7 w-9 scrollbar-hide scrollbar-width-none ${
+              showListItems ? " " : "translate-x-[110rem] -translate-y-[144rem]"
+            }`}
+            onChange={handleQuantityPicker}
+          >
+            {Array.from({ length: 10 }, (_, index) => (
+              <option key={index} value={index + 1}>
+                {index + 1}
+              </option>
+            ))}
+          </select>
 
           <button
-            className={`inline-flex items-center justify-center p-0.5 mb-2 mr-2  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800  text-center  transition-transform duration-700${
-              showListItems
-                ? " "
-                : "translate-x-[110rem] -translate-y-[144rem]"
+            className={`inline-flex items-center justify-center p-0.5 mb-2 mr-2  text-lg font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800  text-center  transition-transform duration-700${
+              showListItems ? " " : "translate-x-[110rem] -translate-y-[144rem]"
             }`}
             onClick={() => {
+              toast(products[activeProduct].name +' added to cart!',{
+                autoClose: 1200,
+
+              })
               handleAddToCart(products[activeProduct], quantity);
               setQuantity(1);
               setIsBought(true);
               setTimeout(() => {
-                setActiveProduct(null), setIsBought(false), scrollerche();
+                setActiveProduct(null),
+                setIsBought(false), 
+                scrollerche();
               }, 250);
             }}
           >
-            <span class=" relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+            <span className=" relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
               Add to cart
             </span>
           </button>
         </div>
+        // /|\
+        //  |
       )}
     </motion.div>
   );
